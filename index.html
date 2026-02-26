@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dino ile Öğren! - Eğlenceli Öğrenme Platformu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff8585 0%, #f183be 100%);
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 48px;
+            color: #ff8787;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #ff4141;
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #cba56b;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        nav {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #3dffe2, #ff9292);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(255,217,61,0.3);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255,217,61,0.5);
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, #ff9b9b, #6BCB77);
+        }
+
+        .section {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #4D96FF;
+            font-size: 36px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .kivi-tip {
+            background: linear-gradient(135deg, #C3B1E1, #FFD93D);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 6px solid #FF9A3C;
+        }
+
+        .kivi-tip strong {
+            color: #4D96FF;
+            font-size: 20px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .story-box {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 3px solid #ffa88b;
+            font-size: 20px;
+            line-height: 1.8;
+        }
+
+        .story-title {
+            color: #FF9A3C;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #6BCB77, #4D96FF);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(227, 136, 136, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+        }
+
+        .difficulty-selector {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .difficulty-btn {
+            padding: 12px 25px;
+            border-radius: 10px;
+            border: 3px solid #ddd;
+            background: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .difficulty-btn.selected {
+            background: #FFD93D;
+            border-color: #FF9A3C;
+            color: white;
+        }
+
+        .emotions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .emotion-card {
+            background: linear-gradient(135deg, #FFD93D, #FF9A3C);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 4px solid transparent;
+        }
+
+        .emotion-card:hover {
+            transform: translateY(-5px);
+            border-color: #4D96FF;
+        }
+
+        .emotion-icon {
+            font-size: 64px;
+            margin-bottom: 10px;
+        }
+
+        .emotion-name {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .journal-entry {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 3px solid #FFD93D;
+            font-size: 18px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .safety-scenario {
+            background: #f0f8ff;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 6px solid #FF9A3C;
+        }
+
+        .scenario-question {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .safety-rules {
+            background: #ff8e8e;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .safety-rules li {
+            margin: 12px 0;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .planner-input {
+            display: grid;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .planner-input input, .planner-input select {
+            padding: 15px;
+            border-radius: 10px;
+            border: 3px solid #FFD93D;
+            font-size: 18px;
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .schedule-table th {
+            background: linear-gradient(135deg, #4D96FF, #ffb2b2);
+            color: white;
+            padding: 15px;
+            font-size: 18px;
+        }
+
+        .schedule-table td {
+            padding: 15px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        .quiz-container {
+            margin: 20px 0;
+        }
+
+        .quiz-question {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 3px solid #6BCB77;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .quiz-option {
+            background: white;
+            border: 3px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 18px;
+        }
+
+        .quiz-option:hover {
+            background: #FFD93D;
+            border-color: #FF9A3C;
+        }
+
+        .quiz-option.correct {
+            background: #6BCB77;
+            border-color: #4D96FF;
+            color: white;
+        }
+
+        .quiz-option.wrong {
+            background: #ff6b6b;
+            border-color: #ee5a6f;
+            color: white;
+        }
+
+        .result-box {
+            background: linear-gradient(135deg, #FFD93D, #FF9A3C);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+            color: white;
+        }
+
+        .result-box h3 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .feedback-message {
+            background: linear-gradient(135deg, #C3B1E1, #FFD93D);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            animation: bounce 0.5s;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .about-section {
+            line-height: 1.8;
+            font-size: 18px;
+        }
+
+        .about-section h3 {
+            color: #4D96FF;
+            font-size: 28px;
+            margin: 25px 0 15px 0;
+        }
+
+        .about-section p {
+            margin: 15px 0;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 32px; }
+            h2 { font-size: 28px; }
+            .nav-btn { padding: 12px 18px; font-size: 16px; }
+            .section { padding: 25px; }
+            .emotions-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: 3px solid #FFD93D;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .task-list {
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .task-item {
+            background: white;
+            border-left: 5px solid #6BCB77;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .delete-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Storage status badge */
+        .storage-badge {
+            display: inline-block;
+            background: #6BCB77;
+            color: white;
+            font-size: 13px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .storage-badge.loading {
+            background: #FFD93D;
+        }
+
+        .storage-badge.error {
+            background: #ff6b6b;
+        }
+
+        /* Stats bar on home */
+        .stats-bar {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 140px;
+            background: linear-gradient(135deg, #4D96FF, #6BCB77);
+            color: white;
+            border-radius: 12px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .stat-card .stat-num {
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .stat-card .stat-label {
+            font-size: 14px;
+            margin-top: 4px;
+            opacity: 0.9;
+        }
+
+        .journal-history-item {
+            background: white;
+            border-left: 5px solid #FFD93D;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .journal-history-item .delete-journal-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .loading-overlay {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">🦖</div>
+            <h1>Dino ile Öğren!</h1>
+            <p class="subtitle">Eğlenceli Öğrenme Maceraları</p>
+        </header>
+
+        <nav>
+            <button class="nav-btn active" onclick="showSection('home', this)">🏠 Ana Sayfa</button>
+            <button class="nav-btn" onclick="showSection('punctuation', this)">✏️ Noktalama Ustası</button>
+            <button class="nav-btn" onclick="showSection('journal', this)">😊 Duygu Günlüğüm</button>
+            <button class="nav-btn" onclick="showSection('safety', this)">🛡️ Dijital Zorbalık Radarım</button>
+            <button class="nav-btn" onclick="showSection('planner', this)">⏰ Zaman Planlayıcım</button>
+            <button class="nav-btn" onclick="showSection('quiz', this)">🧠 Mini Testler</button>
+            <button class="nav-btn" onclick="showSection('about', this)">🌍 Hakkında</button>
+        </nav>
+
+        <!-- ANA SAYFA -->
+        <div id="home" class="section active">
+            <h2>🦖 Merhaba! Ben Dino!</h2>
+            <div class="kivi-tip">
+                <strong>🎉 Hoş Geldin!</strong>
+                <p>Seninle birlikte öğrenmeye hazırım! Yukarıdaki menüden hangi maceraya atılmak istediğini seç. Her bölümde sana yeni şeyler öğreteceğim ve birlikte eğleneceğiz!</p>
+            </div>
+
+            <h3 style="color:#4D96FF; margin-bottom:10px;">📊 Benim İlerlemem <span id="stats-badge" class="storage-badge loading">Yükleniyor...</span></h3>
+            <div class="stats-bar" id="stats-bar">
+                <div class="stat-card"><div class="stat-num" id="stat-journal">-</div><div class="stat-label">📓 Günlük Kaydı</div></div>
+                <div class="stat-card"><div class="stat-num" id="stat-tasks">-</div><div class="stat-label">✅ Planlanmış Görev</div></div>
+                <div class="stat-card"><div class="stat-num" id="stat-quiz">-</div><div class="stat-label">🧠 Quiz Skoru</div></div>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #4D96FF, #f69489); border-radius: 15px; padding: 30px; color: white; text-align: center; margin: 30px 0;">
+                <h3 style="font-size: 28px; margin-bottom: 15px;">🌟 Neler Yapabiliriz?</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 12px;">
+                        <div style="font-size: 48px; margin-bottom: 10px;">✏️</div>
+                        <strong>Noktalama Öğren</strong>
+                        <p>Hikayeler okuyarak noktalama ustası ol!</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 12px;">
+                        <div style="font-size: 48px; margin-bottom: 10px;">😊</div>
+                        <strong>Duygularını Paylaş</strong>
+                        <p>Bugün nasıl hissettiğini benimle paylaş!</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 12px;">
+                        <div style="font-size: 48px; margin-bottom: 10px;">🛡️</div>
+                        <strong>Güvende Kal</strong>
+                        <p>İnternette güvenli olmayı öğren!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NOKTALAMA USTASI -->
+        <div id="punctuation" class="section">
+            <h2>✏️ Noktalama Ustası</h2>
+            <div class="kivi-tip">
+                <strong>Dino'dan İpucu 🦖</strong>
+                <p>Noktalama işaretleri cümlelerin anlaşılmasını sağlar! Virgül, nokta ve soru işareti kullanarak hikayelerimize anlam katalım. Her hikayeyi oku ve noktalama işaretlerini doğru yerlere koy!</p>
+            </div>
+
+            <div class="difficulty-selector">
+                <button class="difficulty-btn selected" onclick="selectDifficulty('kolay', this)">🌟 Kolay</button>
+                <button class="difficulty-btn" onclick="selectDifficulty('orta', this)">⭐ Orta</button>
+                <button class="difficulty-btn" onclick="selectDifficulty('zor', this)">🌠 Zor</button>
+            </div>
+
+            <div id="story-container"></div>
+            <button class="btn" onclick="checkPunctuation()">✅ Cevabı Kontrol Et</button>
+            <button class="btn" onclick="nextStory()">➡️ Sonraki Hikaye</button>
+            <div id="punctuation-feedback"></div>
+        </div>
+
+        <!-- DUYGU GÜNLÜĞÜ -->
+        <div id="journal" class="section">
+            <h2>😊 Duygu Günlüğüm <span id="journal-badge" class="storage-badge loading">Yükleniyor...</span></h2>
+            <div class="kivi-tip">
+                <strong>Dino'dan İpucu 🦖</strong>
+                <p>Duygularını paylaşmak seni daha mutlu eder! Bugün nasıl hissettiğini seç ve benimle paylaş. Her duygu değerlidir ve senin bir parçandır!</p>
+            </div>
+
+            <h3 style="color: #4D96FF; margin: 20px 0;">Bugün nasıl hissediyorsun?</h3>
+            <div class="emotions-grid">
+                <div class="emotion-card" onclick="selectEmotion('mutlu', '😊')">
+                    <div class="emotion-icon">😊</div>
+                    <div class="emotion-name">Mutlu</div>
+                </div>
+                <div class="emotion-card" onclick="selectEmotion('üzgün', '😢')">
+                    <div class="emotion-icon">😢</div>
+                    <div class="emotion-name">Üzgün</div>
+                </div>
+                <div class="emotion-card" onclick="selectEmotion('kızgın', '😠')">
+                    <div class="emotion-icon">😠</div>
+                    <div class="emotion-name">Kızgın</div>
+                </div>
+                <div class="emotion-card" onclick="selectEmotion('heyecanlı', '🤗')">
+                    <div class="emotion-icon">🤗</div>
+                    <div class="emotion-name">Heyecanlı</div>
+                </div>
+                <div class="emotion-card" onclick="selectEmotion('şaşkın', '😲')">
+                    <div class="emotion-icon">😲</div>
+                    <div class="emotion-name">Şaşkın</div>
+                </div>
+                <div class="emotion-card" onclick="selectEmotion('yorgun', '😴')">
+                    <div class="emotion-icon">😴</div>
+                    <div class="emotion-name">Yorgun</div>
+                </div>
+            </div>
+
+            <div class="journal-entry">
+                <label style="font-size: 20px; color: #4D96FF; font-weight: bold; display: block; margin-bottom: 10px;">
+                    Bugün kendimi böyle hissediyorum çünkü...
+                </label>
+                <textarea id="journal-text" placeholder="Duygularını buraya yaz..."></textarea>
+                <button class="btn" onclick="saveJournal()">💾 Kaydet</button>
+            </div>
+
+            <div id="emotion-feedback"></div>
+            <div id="journal-history" style="margin-top: 30px;">
+                <div class="loading-overlay">📂 Günlük kayıtları yükleniyor...</div>
+            </div>
+        </div>
+
+        <!-- DİJİTAL ZORBALIK RADARI -->
+        <div id="safety" class="section">
+            <h2>🛡️ Dijital Zorbalık Radarım</h2>
+            <div class="kivi-tip">
+                <strong>Dino'dan İpucu 🦖</strong>
+                <p>İnternet harika bir yer ama güvende olmayı bilmeliyiz! Dijital zorbalık internette birisine kasıtlı olarak kötü davranmaktır. Birlikte nasıl güvende kalacağımızı öğrenelim!</p>
+            </div>
+
+            <div class="about-section" style="background: #ffdddd; padding: 25px; border-radius: 12px; margin: 20px 0;">
+                <h3>🤔 Dijital Zorbalık Nedir?</h3>
+                <p>Dijital zorbalık, internet, telefon veya sosyal medya üzerinden birine kötü mesajlar göndermek, dalga geçmek veya rahatsız etmektir. Bu davranışlar insanları çok üzebilir.</p>
+                <h3 style="margin-top: 25px;">🚨 Dijital Zorbalık Örnekleri:</h3>
+                <ul style="margin-left: 25px; margin-top: 10px;">
+                    <li>Birisi hakkında kötü şeyler yazmak</li>
+                    <li>Utandırıcı fotoğraflar paylaşmak</li>
+                    <li>Sürekli kötü mesajlar göndermek</li>
+                    <li>Birisini oyunlardan veya gruplardan dışlamak</li>
+                </ul>
+            </div>
+
+            <h3 style="color: #ff9595; margin: 30px 0 20px 0;">🎮 Senaryoları Oku ve Karar Ver!</h3>
+            <div id="scenario-container"></div>
+
+            <div class="safety-rules">
+                <h3 style="color: #4D96FF; margin-bottom: 15px;">🦖 Dino'nun Güvenlik Kuralları</h3>
+                <ol style="margin-left: 25px;">
+                    <li>Kişisel bilgilerini (adres, telefon, okul adı) kimseyle paylaşma</li>
+                    <li>Tanımadığın kişilerle konuşma veya buluşma</li>
+                    <li>Şifrelerini kimseyle paylaşma, anne-baban bile olsa not al</li>
+                    <li>İnternette sana kötü davranan varsa hemen büyüklerine söyle</li>
+                    <li>Başkalarının fotoğraflarını izinsiz paylaşma</li>
+                    <li>İnternette her gördüğüne inanma, doğruluğunu araştır</li>
+                    <li>Oyun oynarken veya sohbet ederken nazik ol</li>
+                    <li>Birisinin sana kötü bir şey göndermesini istediyse reddet ve büyüklerine söyle</li>
+                    <li>Ekran süresine dikkat et, dinlenme molaları ver</li>
+                    <li>İnternette yaptığın her şeyin bir izi kalır, bu yüzden sorumlu davran</li>
+                </ol>
+            </div>
+
+            <h3 style="color: #FF9A3C; margin: 30px 0 20px 0;">📝 Güvenlik Mini Testi</h3>
+            <div id="safety-quiz-container"></div>
+            <button class="btn" onclick="checkSafetyQuiz()">✅ Cevapları Kontrol Et</button>
+            <div id="safety-quiz-feedback"></div>
+        </div>
+
+        <!-- ZAMAN PLANLAYICI -->
+        <div id="planner" class="section">
+            <h2>⏰ Zaman Süper Planlayıcım <span id="planner-badge" class="storage-badge loading">Yükleniyor...</span></h2>
+            <div class="kivi-tip">
+                <strong>Dino'dan İpucu 🦖</strong>
+                <p>Zamanını iyi kullanmak seni hem başarılı hem de mutlu eder! Ödevlerini, derslerini ve eğlence zamanını planla. Her şey için zaman var, sadece organize olmak gerekiyor!</p>
+            </div>
+
+            <div class="planner-input">
+                <input type="text" id="task-name" class="input-field" placeholder="Ödev veya görev adı (ör: Matematik ödevi)">
+                <select id="task-day" class="input-field">
+                    <option value="">Gün Seç</option>
+                    <option value="Pazartesi">Pazartesi</option>
+                    <option value="Salı">Salı</option>
+                    <option value="Çarşamba">Çarşamba</option>
+                    <option value="Perşembe">Perşembe</option>
+                    <option value="Cuma">Cuma</option>
+                    <option value="Cumartesi">Cumartesi</option>
+                    <option value="Pazar">Pazar</option>
+                </select>
+                <input type="time" id="task-time" class="input-field">
+                <button class="btn" onclick="addTask()">➕ Görevi Ekle</button>
+            </div>
+
+            <div class="task-list" id="task-list">
+                <h3 style="color: #4D96FF; margin-bottom: 15px;">📋 Haftalık Planım</h3>
+                <div id="tasks-display">
+                    <div class="loading-overlay">📂 Görevler yükleniyor...</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 15px;">
+                <button class="btn btn-danger" onclick="clearAllTasks()">🗑️ Tüm Görevleri Sil</button>
+            </div>
+
+            <div class="kivi-tip" style="margin-top: 30px;">
+                <strong>⏰ Dino'nun Zaman Yönetimi Tavsiyeleri</strong>
+                <ul style="margin-left: 25px; margin-top: 15px; line-height: 1.8;">
+                    <li>Her gün aynı saatte uyan ve yat, düzenli uyku çok önemli!</li>
+                    <li>Ödevlerini küçük parçalara böl, her seferinde biraz yap</li>
+                    <li>Zor işleri enerjinin yüksek olduğu zamanlarda yap</li>
+                    <li>Her 30-45 dakikada bir kısa mola ver</li>
+                    <li>Ödev yaparken televizyon ve oyunlardan uzak dur</li>
+                    <li>Yarın yapacaklarını akşam listele</li>
+                    <li>Kendine ödül sistemi oluştur (ödevi bitirince 15 dakika oyun gibi)</li>
+                    <li>Önce yapman gerekenler, sonra yapmak istediklerini yap</li>
+                    <li>Bir şey yapmak istemiyorsan bile 5 dakika başla, sonra devam etmek kolaylaşır</li>
+                    <li>Haftada en az bir gün tamamen dinlenme günü ayır</li>
+                    <li>Sabah kahvaltını asla atlama, beyin gücü için önemli!</li>
+                    <li>Ödevleri son güne bırakma, her gün biraz çalış</li>
+                    <li>Çalışma alanını düzenli tut, dağınıklık dikkat dağıtır</li>
+                    <li>Aile ile vakit geçirmeyi unutma, bu da önemli!</li>
+                    <li>Her başardığın görevden sonra kendini kutla!</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- MİNİ TESTLER -->
+        <div id="quiz" class="section">
+            <h2>🧠 Mini Öğrenme Testleri</h2>
+            <div class="kivi-tip">
+                <strong>Dino'dan İpucu 🦖</strong>
+                <p>Testler öğrendiklerini pekiştirmenin en eğlenceli yolu! Doğru cevapları bulmaya çalış, yanlış yapsan bile öğrenirsin. Unutma, her hata bir öğrenme fırsatıdır!</p>
+            </div>
+
+            <div class="difficulty-selector">
+                <button class="difficulty-btn selected" onclick="selectQuizCategory('turkce', this)">📚 Türkçe</button>
+                <button class="difficulty-btn" onclick="selectQuizCategory('matematik', this)">🔢 Matematik</button>
+                <button class="difficulty-btn" onclick="selectQuizCategory('genelkultur', this)">🌍 Genel Kültür</button>
+            </div>
+
+            <div id="best-scores" style="margin: 15px 0;"></div>
+            <div id="quiz-container"></div>
+            <button class="btn" onclick="submitQuiz()" id="submit-quiz-btn" style="display:none;">✅ Cevapları Gönder</button>
+            <div id="quiz-result"></div>
+        </div>
+
+        <!-- HAKKINDA -->
+        <div id="about" class="section">
+            <h2>🌍 Hakkında</h2>
+            <div class="about-section">
+                <h3>Dino kimdir? 🦖</h3>
+                <p>Merhaba! Ben Dino, hem error robotik takımının maskotu hem de senin öğrenme arkadaşınım! Çok meraklı ve öğrenmeyi seven bir dinozorum. Hayalim bütün çocukların öğrenirken eğlenmesi ve kendilerini güvende hissetmesi. Seninle birlikte olmaktan çok mutluyum!</p>
+
+                <h3>🎯 Bu Site Neden Var?</h3>
+                <p>Dino ile Öğren platformu, çocukların eğlenirken öğrenmesi için tasarlandı. Burada hem Türkçe becerilerini geliştirecek, hem duygularını keşfedecek, hem de dijital dünyada güvende olmayı öğreneceksin. Öğrenmek her zaman eğlenceli olmalı!</p>
+
+                <h3>🎓 Ne Öğreneceksin?</h3>
+                <ul style="margin-left: 25px; margin-top: 10px;">
+                    <li><strong>Noktalama İşaretleri:</strong> Virgül, nokta, soru işareti gibi işaretleri doğru kullanmayı öğreneceksin</li>
+                    <li><strong>Duygusal Farkındalık:</strong> Duygularını tanımayı ve ifade etmeyi öğreneceksin</li>
+                    <li><strong>Dijital Güvenlik:</strong> İnternette nasıl güvende kalacağını keşfedeceksin</li>
+                    <li><strong>Zaman Yönetimi:</strong> Zamanını iyi kullanmayı ve organize olmayı öğreneceksin</li>
+                    <li><strong>Genel Bilgiler:</strong> Türkçe, matematik ve genel kültür bilgini artıracaksın</li>
+                </ul>
+
+                <h3>👨‍👩‍👧 Ebeveynler İçin</h3>
+                <div style="background: #f0f8ff; padding: 25px; border-radius: 12px; margin-top: 15px;">
+                    <p><strong>Değerli Ebeveynler,</strong></p>
+                    <p>Dino ile Öğren, çocuğunuzun güvenli bir ortamda öğrenmesini desteklemek için tasarlandı. Platform:</p>
+                    <ul style="margin-left: 25px; margin-top: 10px;">
+                        <li>✅ Tamamen reklamsız ve güvenli</li>
+                        <li>✅ Yaş grubuna uygun içerik</li>
+                        <li>✅ Dijital güvenlik eğitimi içeriyor</li>
+                        <li>✅ Duygusal gelişimi destekliyor</li>
+                        <li>✅ Akademik becerileri pekiştiriyor</li>
+                    </ul>
+                    <p style="margin-top: 15px;">Çocuğunuzun gelişimini takip edebilir ve birlikte kullanarak kaliteli zaman geçirebilirsiniz.</p>
+                </div>
+
+                <h3>🚀 FLL Innovation Project</h3>
+                <div style="background: #fff8e1; padding: 25px; border-radius: 12px; margin-top: 15px;">
+                    <p><strong>Problem:</strong> Çocuklar dijital dünyada yeterli güvenlik bilgisine sahip olmadan vakit geçiriyor ve temel eğitim becerileri eğlenceli yöntemlerle öğretilmiyor.</p>
+                    <p><strong>Çözüm:</strong> Dino ile Öğren, oyunlaştırılmış eğitim içerikleri ve dijital güvenlik eğitimi sunarak çocukların hem akademik becerilerini hem de dijital okuryazarlıklarını geliştiriyor.</p>
+                    <p><strong>Hedef Kitle:</strong> 7-12 yaş arası çocuklar ve aileleri</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =====================================================================
+        // STORAGE HELPERS — localStorage (web sitesi için kalıcı depolama)
+        // =====================================================================
+        async function storageGet(key) {
+            try {
+                const val = localStorage.getItem('dino-' + key);
+                return val ? JSON.parse(val) : null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        async function storageSet(key, value) {
+            try {
+                localStorage.setItem('dino-' + key, JSON.stringify(value));
+                return true;
+            } catch (e) {
+                console.error('Storage set error:', e);
+                return false;
+            }
+        }
+
+        async function storageDelete(key) {
+            try {
+                localStorage.removeItem('dino-' + key);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function setBadge(id, text, type) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = text;
+            el.className = 'storage-badge' + (type ? ' ' + type : '');
+        }
+
+        // =====================================================================
+        // DATA
+        // =====================================================================
+        const stories = {
+            kolay: [
+                { wrong: "bugün hava çok güzel dışarıda oynamak çok eğlenceli olacak", correct: "Bugün hava çok güzel. Dışarıda oynamak çok eğlenceli olacak.", title: "Güzel Hava" },
+                { wrong: "kedim çok sevimli onunla oynamayı çok seviyorum", correct: "Kedim çok sevimli. Onunla oynamayı çok seviyorum.", title: "Sevimli Kedi" },
+                { wrong: "okula gitmek ister misin evet çok isterim", correct: "Okula gitmek ister misin? Evet, çok isterim.", title: "Okul Zamanı" },
+                { wrong: "elma portakal muz hepsi çok lezzetli meyveler", correct: "Elma, portakal, muz... Hepsi çok lezzetli meyveler.", title: "Meyveler" }
+            ],
+            orta: [
+                { wrong: "annem bana sordu ödevini yaptın mı ben de henüz yapmadım dedim", correct: "Annem bana sordu: \"Ödevini yaptın mı?\" Ben de henüz yapmadım, dedim.", title: "Ödev Sohbeti" },
+                { wrong: "parkta top oynamak koşmak ve arkadaşlarımla zaman geçirmek çok eğlenceli", correct: "Parkta top oynamak, koşmak ve arkadaşlarımla zaman geçirmek çok eğlenceli.", title: "Parkta Eğlence" },
+                { wrong: "sabah kalktım dişlerimi fırçaladım kahvaltı yaptım ve okula gittim", correct: "Sabah kalktım, dişlerimi fırçaladım, kahvaltı yaptım ve okula gittim.", title: "Sabah Rutini" },
+                { wrong: "favori renklerim mavi yeşil ve sarıdır senin favori rengin ne", correct: "Favori renklerim mavi, yeşil ve sarıdır. Senin favori rengin ne?", title: "Renkler" }
+            ],
+            zor: [
+                { wrong: "öğretmen sınıfa girdi ve dedi ki bugün size çok önemli bir şey anlatacağım herkes dikkat etsin", correct: "Öğretmen sınıfa girdi ve dedi ki: \"Bugün size çok önemli bir şey anlatacağım. Herkes dikkat etsin!\"", title: "Öğretmenin Duyurusu" },
+                { wrong: "kütüphanede kitap okumak çalışmak ve araştırma yapmak için sessiz olmak gerekir yoksa başkalarını rahatsız ederiz", correct: "Kütüphanede kitap okumak, çalışmak ve araştırma yapmak için sessiz olmak gerekir; yoksa başkalarını rahatsız ederiz.", title: "Kütüphane Kuralları" },
+                { wrong: "en sevdiğim mevsim yazdır çünkü dondurma yerim denize girerim ve uzun tatil yaparım kışı da seviyorum ama yaz daha güzel", correct: "En sevdiğim mevsim yazdır; çünkü dondurma yerim, denize girerim ve uzun tatil yaparım. Kışı da seviyorum ama yaz daha güzel.", title: "Mevsimler" }
+            ]
+        };
+
+        const motivationMessages = {
+            mutlu: ["Harika! Mutlu olmak çok güzel bir duygu. Bu enerjiyi paylaş!", "Senin mutluluğun Dino'yu da çok mutlu ediyor! 🦖", "Gülümseyen yüzler dünyayı daha güzel yapar. Harikasın!"],
+            üzgün: ["Üzgün hissetmek normal. Her duygu geçicidir, yarın daha güzel olacak!", "Dino seninle! Üzgün olduğunda sevdiklerinle konuş.", "Zor günler de olur, ama sen güçlüsün. Hep yanındayım! 🦖"],
+            kızgın: ["Kızgın olduğunda önce derin nefes al. Bu geçecek!", "Öfkeni sağlıklı yollarla ifade et. Koşmak veya resim yapmak iyi gelir!", "Kızgınlık doğal bir duygu. Ama kontrol altında tutmak önemli! 🦖"],
+            heyecanlı: ["Ne kadar heyecanlısın! Bu enerji muhteşem!", "Heyecan güzel şeylerin habercisi! Dino da seninle heyecanlanıyor! 🦖", "Bu pozitif enerjiyle harika şeyler yapacaksın!"],
+            şaşkın: ["Şaşırmak öğrenmenin ilk adımı! Merak et, keşfet!", "Dünya sürprizlerle dolu. Şaşırmaya devam et! 🦖", "Her şaşkınlık yeni bir şey öğrenme fırsatıdır!"],
+            yorgun: ["Dinlenmek çok önemli! Kendine iyi bak.", "Yorgun hissettiğinde vücudun sana bir şey söylüyor: Dinlen! 🦖", "Erken yat, iyi uyu. Yarın kendini çok daha iyi hissedeceksin!"]
+        };
+
+        const safetyScenarios = [
+            { question: "Tanımadığın biri sana sosyal medyada mesaj atıyor ve seninle buluşmak istiyor. Ne yapmalısın?", options: ["Hemen buluşurum", "Anne babama haber veririm", "Adresimi gönderirim"], correct: 1, explanation: "Doğru! Tanımadığın kişilerle asla buluşmamalı ve hemen büyüklerine haber vermelisin." },
+            { question: "Bir oyunda karşılaştığın biri senden şifreni istiyor. Ne yapmalısın?", options: ["Şifremi paylaşırım", "Asla şifre paylaşmam", "Önce arkadaşlarıma sorarım"], correct: 1, explanation: "Harika! Şifreler çok gizlidir ve kimseyle paylaşılmamalıdır." },
+            { question: "Arkadaşın sana bir başka arkadaşınız hakkında kötü bir fotoğraf gönderiyor ve 'herkese gönder' diyor. Ne yapmalısın?", options: ["Herkese gönderirim", "Göndermem ve arkadaşımı uyarırım", "Sadece birkaç kişiye gönderirim"], correct: 1, explanation: "Süpersin! Başkalarını utandıracak şeyler paylaşmak zorbalıktır." },
+            { question: "İnternette okuduğun bir haber çok ilginç görünüyor. Ne yapmalısın?", options: ["Hemen inanır ve paylaşırım", "Doğru olup olmadığını araştırırım", "Umursamam"], correct: 1, explanation: "Mükemmel! İnternetteki her şey doğru değildir, araştırmak önemli." },
+            { question: "Oyun oynarken biri sana kötü söz söyledi. Ne yapmalısın?", options: ["Ben de ona kötü söz söylerim", "Oyunu bırakır ve büyüklerime söylerim", "Görmezden gelirim"], correct: 1, explanation: "Doğru karar! Dijital zorbalığa karşı durmalı ve yardım istemeliyiz." }
+        ];
+
+        const safetyQuizQuestions = [
+            { question: "Şifremi en iyi arkadaşımla paylaşabilirim.", answer: false },
+            { question: "Tanımadığım biriyle internette konuşmamalıyım.", answer: true },
+            { question: "Her gördüğüm habere inanmalıyım.", answer: false },
+            { question: "Birileri beni rahatsız ediyorsa büyüklerime söylemeliyim.", answer: true },
+            { question: "Arkadaşımın fotoğrafını izinsiz paylaşabilirim.", answer: false },
+            { question: "İnternette gerçek adımı ve adresimi paylaşmamalıyım.", answer: true },
+            { question: "Oyunda bana kötü davranan birine aynı şekilde davranmalıyım.", answer: false },
+            { question: "Ekran başında çok uzun süre kalınca mola vermeliyim.", answer: true },
+            { question: "Tanımadığım birinin toplantı linkine tıklayabilirim.", answer: false },
+            { question: "Dijital zorbalık gerçek zorbalık kadar kötüdür.", answer: true }
+        ];
+
+        const quizQuestions = {
+            turkce: [
+                { question: "Aşağıdakilerden hangisi noktalama işaretidir?", options: ["A", "B", ".", "M"], correct: 2 },
+                { question: "'Bugün hava çok güzel' cümlesinde kaç tane isim vardır?", options: ["1", "2", "3", "4"], correct: 1 },
+                { question: "Soru cümlelerinin sonunda hangi işaret kullanılır?", options: [".", ",", "?", "!"], correct: 2 },
+                { question: "'Elma, armut, muz' kelimelerinin arasında hangi işaret vardır?", options: ["Nokta", "Virgül", "Noktalı virgül", "İki nokta"], correct: 1 },
+                { question: "Aşağıdakilerden hangisi ünlem cümlesidir?", options: ["Nasılsın", "Ne güzel", "Okula gidiyorum", "Kitap okuyorum"], correct: 1 },
+                { question: "'Öğretmen sınıfa girdi' cümlesinde özne nedir?", options: ["Öğretmen", "sınıfa", "girdi", "sınıf"], correct: 0 },
+                { question: "Cümle kaç kelimeden oluşur?", options: ["En az 1", "En az 2", "En az 3", "En az 5"], correct: 0 },
+                { question: "Aşağıdakilerden hangisi büyük harfle başlar?", options: ["elma", "Ankara", "kalem", "kitap"], correct: 1 },
+                { question: "İsim nedir?", options: ["Hareket bildiren", "Varlık bildiren", "Soru soran", "Emir veren"], correct: 1 },
+                { question: "'Koş, oyna, gül' cümlesi ne tür cümledir?", options: ["Soru", "Emir", "Ünlem", "Haber"], correct: 1 }
+            ],
+            matematik: [
+                { question: "5 + 3 = ?", options: ["6", "7", "8", "9"], correct: 2 },
+                { question: "12 - 4 = ?", options: ["6", "7", "8", "9"], correct: 2 },
+                { question: "3 x 4 = ?", options: ["7", "10", "12", "15"], correct: 2 },
+                { question: "20 ÷ 4 = ?", options: ["4", "5", "6", "7"], correct: 1 },
+                { question: "Bir üçgenin kaç kenarı vardır?", options: ["2", "3", "4", "5"], correct: 1 },
+                { question: "10 sayısının yarısı kaçtır?", options: ["3", "4", "5", "6"], correct: 2 },
+                { question: "2, 4, 6, 8, ... Sıradaki sayı nedir?", options: ["9", "10", "11", "12"], correct: 1 },
+                { question: "Bir saatte kaç dakika vardır?", options: ["50", "60", "70", "80"], correct: 1 },
+                { question: "7 + 7 = ?", options: ["12", "13", "14", "15"], correct: 2 },
+                { question: "Hangi sayı en büyüktür?", options: ["45", "54", "34", "43"], correct: 1 }
+            ],
+            genelkultur: [
+                { question: "Türkiye'nin başkenti neresidir?", options: ["İstanbul", "Ankara", "İzmir", "Bursa"], correct: 1 },
+                { question: "Bir yılda kaç mevsim vardır?", options: ["2", "3", "4", "5"], correct: 2 },
+                { question: "Güneş hangi yönden doğar?", options: ["Kuzey", "Güney", "Doğu", "Batı"], correct: 2 },
+                { question: "Kaç gün olunca bir hafta olur?", options: ["5", "6", "7", "8"], correct: 2 },
+                { question: "Hangi hayvan süt verir?", options: ["Kedi", "İnek", "Aslan", "Kuş"], correct: 1 },
+                { question: "Gökkuşağında kaç renk vardır?", options: ["5", "6", "7", "8"], correct: 2 },
+                { question: "En büyük gezegen hangisidir?", options: ["Dünya", "Mars", "Jüpiter", "Venüs"], correct: 2 },
+                { question: "Hangi mevsimde kar yağar?", options: ["Yaz", "İlkbahar", "Sonbahar", "Kış"], correct: 3 },
+                { question: "Bir günde kaç saat vardır?", options: ["12", "20", "24", "30"], correct: 2 },
+                { question: "Hangi hayvan uçar?", options: ["Kedi", "Köpek", "Kuş", "Balık"], correct: 2 }
+            ]
+        };
+
+        // =====================================================================
+        // IN-MEMORY STATE (loaded from / saved to storage)
+        // =====================================================================
+        let currentDifficulty = 'kolay';
+        let currentStoryIndex = 0;
+        let tasks = [];          // saved under 'planner-tasks'
+        let journalEntries = []; // saved under 'journal-entries'
+        let bestScores = {};     // saved under 'quiz-best-scores'  e.g. {turkce: 8, matematik: 5}
+        let currentQuizCategory = 'turkce';
+        let quizAnswers = {};
+
+        // =====================================================================
+        // INIT — load everything from storage on page load
+        // =====================================================================
+        window.onload = async function () {
+            // Load tasks
+            const savedTasks = await storageGet('planner-tasks');
+            if (savedTasks) tasks = savedTasks;
+
+            // Load journal
+            const savedJournal = await storageGet('journal-entries');
+            if (savedJournal) journalEntries = savedJournal;
+
+            // Load best scores
+            const savedScores = await storageGet('quiz-best-scores');
+            if (savedScores) bestScores = savedScores;
+
+            // Update home stats
+            updateHomeStats();
+
+            // Load first story
+            loadStory();
+        };
+
+        // =====================================================================
+        // HOME STATS
+        // =====================================================================
+        async function updateHomeStats() {
+            document.getElementById('stat-journal').textContent = journalEntries.length;
+            document.getElementById('stat-tasks').textContent = tasks.length;
+            const allScores = Object.values(bestScores);
+            const avgScore = allScores.length > 0
+                ? Math.round(allScores.reduce((a, b) => a + b, 0) / allScores.length)
+                : 0;
+            document.getElementById('stat-quiz').textContent = allScores.length > 0 ? avgScore + '/10' : '-';
+            setBadge('stats-badge', '💾 Kaydedildi', '');
+        }
+
+        // =====================================================================
+        // NAV
+        // =====================================================================
+        function showSection(sectionId, btn) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            if (btn) btn.classList.add('active');
+
+            if (sectionId === 'punctuation') {
+                loadStory();
+            } else if (sectionId === 'safety') {
+                loadSafetyScenarios();
+                loadSafetyQuiz();
+            } else if (sectionId === 'quiz') {
+                currentQuizCategory = 'turkce';
+                document.querySelectorAll('#quiz .difficulty-btn').forEach((b, i) => b.classList.toggle('selected', i === 0));
+                loadQuiz();
+            } else if (sectionId === 'planner') {
+                displayTasks();
+                setBadge('planner-badge', `📋 ${tasks.length} görev`, '');
+            } else if (sectionId === 'journal') {
+                displayJournalHistory();
+                setBadge('journal-badge', `📓 ${journalEntries.length} kayıt`, '');
+            } else if (sectionId === 'home') {
+                updateHomeStats();
+            }
+        }
+
+        // =====================================================================
+        // NOKTALAMA USTASI
+        // =====================================================================
+        function selectDifficulty(level, btn) {
+            currentDifficulty = level;
+            currentStoryIndex = 0;
+            document.querySelectorAll('#punctuation .difficulty-btn').forEach(b => b.classList.remove('selected'));
+            if (btn) btn.classList.add('selected');
+            loadStory();
+        }
+
+        function loadStory() {
+            const story = stories[currentDifficulty][currentStoryIndex];
+            const container = document.getElementById('story-container');
+            container.innerHTML = `
+                <div class="story-box">
+                    <div class="story-title">${story.title}</div>
+                    <div style="margin: 20px 0;">
+                        <strong style="color: #FF9A3C;">İşaretsiz Hikaye:</strong>
+                        <p style="margin-top: 10px;">${story.wrong}</p>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <label style="font-weight: bold; color: #4D96FF; display: block; margin-bottom: 10px;">
+                            Senin Noktalaman (Yukarıdaki hikayeyi doğru noktalama işaretleriyle yaz):
+                        </label>
+                        <textarea id="user-punctuation" class="input-field" style="min-height: 100px; width: 100%;" placeholder="Hikayeyi doğru noktalama işaretleriyle buraya yaz..."></textarea>
+                    </div>
+                </div>
+            `;
+            document.getElementById('punctuation-feedback').innerHTML = '';
+        }
+
+        function checkPunctuation() {
+            const story = stories[currentDifficulty][currentStoryIndex];
+            const userAnswer = document.getElementById('user-punctuation').value.trim();
+            const feedback = document.getElementById('punctuation-feedback');
+
+            if (!userAnswer) {
+                feedback.innerHTML = '<div class="feedback-message" style="background: #ff6b6b;">Lütfen hikayeyi noktalama işaretleriyle yaz! 🦖</div>';
+                return;
+            }
+
+            const similarity = userAnswer.toLowerCase() === story.correct.toLowerCase();
+
+            if (similarity) {
+                feedback.innerHTML = `
+                    <div class="feedback-message">🎉 Harikasın! Süper Noktalama Ustası oldun! 🦖</div>
+                    <div class="story-box" style="background: #e8f5e9;">
+                        <strong style="color: #4D96FF;">Doğru Cevap:</strong>
+                        <p style="margin-top: 10px;">${story.correct}</p>
+                    </div>`;
+            } else {
+                feedback.innerHTML = `
+                    <div class="feedback-message" style="background: linear-gradient(135deg, #FF9A3C, #FFD93D);">
+                        🤔 Biraz daha düşün! İpucu: Nokta, virgül ve büyük harflere dikkat et! 🦖
+                    </div>
+                    <div class="story-box" style="background: #fff8e1;">
+                        <strong style="color: #4D96FF;">Doğru Cevap:</strong>
+                        <p style="margin-top: 10px;">${story.correct}</p>
+                    </div>`;
+            }
+        }
+
+        function nextStory() {
+            currentStoryIndex = (currentStoryIndex + 1) % stories[currentDifficulty].length;
+            loadStory();
+        }
+
+        // =====================================================================
+        // DUYGU GÜNLÜĞÜ
+        // =====================================================================
+        function selectEmotion(emotion, icon) {
+            const messages = motivationMessages[emotion];
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById('emotion-feedback').innerHTML = `
+                <div class="feedback-message">${icon} ${randomMessage}</div>`;
+        }
+
+        async function saveJournal() {
+            const text = document.getElementById('journal-text').value.trim();
+            if (!text) { alert('Lütfen duygularını yaz!'); return; }
+
+            const entry = {
+                id: Date.now(),
+                date: new Date().toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
+                text: text
+            };
+
+            journalEntries.unshift(entry);
+
+            setBadge('journal-badge', '💾 Kaydediliyor...', 'loading');
+            const ok = await storageSet('journal-entries', journalEntries);
+            setBadge('journal-badge', ok ? `📓 ${journalEntries.length} kayıt` : '⚠️ Kayıt hatası', ok ? '' : 'error');
+
+            document.getElementById('journal-text').value = '';
+            document.getElementById('emotion-feedback').innerHTML = `
+                <div class="feedback-message">💾 Günlüğün kaydedildi! Dino seninle gurur duyuyor! 🦖</div>`;
+
+            displayJournalHistory();
+            updateHomeStats();
+        }
+
+        async function deleteJournalEntry(id) {
+            journalEntries = journalEntries.filter(e => e.id !== id);
+            await storageSet('journal-entries', journalEntries);
+            setBadge('journal-badge', `📓 ${journalEntries.length} kayıt`, '');
+            displayJournalHistory();
+            updateHomeStats();
+        }
+
+        function displayJournalHistory() {
+            const container = document.getElementById('journal-history');
+            if (journalEntries.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let html = '<h3 style="color: #4D96FF; margin: 20px 0;">📖 Geçmiş Kayıtlarım</h3>';
+            journalEntries.forEach(entry => {
+                html += `
+                    <div class="journal-history-item">
+                        <button class="delete-journal-btn" onclick="deleteJournalEntry(${entry.id})">🗑️ Sil</button>
+                        <div style="font-weight: bold; color: #FF9A3C; margin-bottom: 8px;">📅 ${entry.date}</div>
+                        <p style="padding-right: 60px;">${entry.text}</p>
+                    </div>`;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // =====================================================================
+        // DİJİTAL GÜVENLİK
+        // =====================================================================
+        function loadSafetyScenarios() {
+            const container = document.getElementById('scenario-container');
+            let html = '';
+            safetyScenarios.forEach((scenario, index) => {
+                html += `
+                    <div class="safety-scenario">
+                        <div class="scenario-question"><strong>Senaryo ${index + 1}:</strong> ${scenario.question}</div>
+                        <div style="display: grid; gap: 10px; margin-top: 15px;">
+                            ${scenario.options.map((option, optIndex) => `
+                                <button class="quiz-option" onclick="checkScenario(${index}, ${optIndex})">
+                                    ${option}
+                                </button>`).join('')}
+                        </div>
+                        <div id="scenario-feedback-${index}" style="margin-top: 15px;"></div>
+                    </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function checkScenario(scenarioIndex, selectedOption) {
+            const scenario = safetyScenarios[scenarioIndex];
+            const feedback = document.getElementById(`scenario-feedback-${scenarioIndex}`);
+            const buttons = document.querySelectorAll(`#scenario-container .safety-scenario:nth-child(${scenarioIndex + 1}) .quiz-option`);
+
+            buttons.forEach((btn, index) => {
+                btn.disabled = true;
+                if (index === scenario.correct) btn.classList.add('correct');
+                else if (index === selectedOption) btn.classList.add('wrong');
+            });
+
+            feedback.innerHTML = selectedOption === scenario.correct
+                ? `<div style="background: #6BCB77; color: white; padding: 15px; border-radius: 10px;">✅ ${scenario.explanation}</div>`
+                : `<div style="background: #FF9A3C; color: white; padding: 15px; border-radius: 10px;">⚠️ ${scenario.explanation}</div>`;
+        }
+
+        function loadSafetyQuiz() {
+            const container = document.getElementById('safety-quiz-container');
+            let html = '';
+            safetyQuizQuestions.forEach((q, index) => {
+                html += `
+                    <div class="quiz-question">
+                        <div style="font-weight: bold; margin-bottom: 15px;">${index + 1}. ${q.question}</div>
+                        <div style="display: flex; gap: 15px;">
+                            <label style="cursor: pointer; font-size: 18px;">
+                                <input type="radio" name="safety-q${index}" value="true" style="margin-right: 8px; width: 20px; height: 20px;">
+                                Doğru
+                            </label>
+                            <label style="cursor: pointer; font-size: 18px;">
+                                <input type="radio" name="safety-q${index}" value="false" style="margin-right: 8px; width: 20px; height: 20px;">
+                                Yanlış
+                            </label>
+                        </div>
+                    </div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function checkSafetyQuiz() {
+            let correct = 0;
+            const total = safetyQuizQuestions.length;
+            safetyQuizQuestions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="safety-q${index}"]:checked`);
+                if (selected && selected.value === String(q.answer)) correct++;
+            });
+
+            const percentage = (correct / total) * 100;
+            let message = percentage === 100
+                ? '🎉 Mükemmel! Dijital Güvenlik Uzmanısın! Dino seninle gurur duyuyor! 🦖'
+                : percentage >= 70
+                    ? '👍 Harika! Dijital güvenlik konusunda çok iyisin! Biraz daha pratik yaparak mükemmel olacaksın! 🦖'
+                    : '💪 İyi bir başlangıç! Dino\'nun güvenlik kurallarını tekrar oku ve testi yeniden dene! 🦖';
+
+            document.getElementById('safety-quiz-feedback').innerHTML = `
+                <div class="result-box">
+                    <h3>Sonucun: ${correct} / ${total}</h3>
+                    <p style="font-size: 22px; margin-top: 15px;">${message}</p>
+                </div>`;
+        }
+
+        // =====================================================================
+        // ZAMAN PLANLAYICI
+        // =====================================================================
+        async function addTask() {
+            const taskName = document.getElementById('task-name').value.trim();
+            const taskDay = document.getElementById('task-day').value;
+            const taskTime = document.getElementById('task-time').value;
+
+            if (!taskName || !taskDay || !taskTime) { alert('Lütfen tüm alanları doldur!'); return; }
+
+            tasks.push({ id: Date.now(), name: taskName, day: taskDay, time: taskTime });
+
+            document.getElementById('task-name').value = '';
+            document.getElementById('task-day').value = '';
+            document.getElementById('task-time').value = '';
+
+            setBadge('planner-badge', '💾 Kaydediliyor...', 'loading');
+            const ok = await storageSet('planner-tasks', tasks);
+            setBadge('planner-badge', ok ? `📋 ${tasks.length} görev` : '⚠️ Kayıt hatası', ok ? '' : 'error');
+
+            displayTasks();
+            updateHomeStats();
+        }
+
+        async function deleteTask(taskId) {
+            tasks = tasks.filter(t => t.id !== taskId);
+            await storageSet('planner-tasks', tasks);
+            setBadge('planner-badge', `📋 ${tasks.length} görev`, '');
+            displayTasks();
+            updateHomeStats();
+        }
+
+        async function clearAllTasks() {
+            if (!confirm('Tüm görevleri silmek istediğinden emin misin?')) return;
+            tasks = [];
+            await storageSet('planner-tasks', tasks);
+            setBadge('planner-badge', '📋 0 görev', '');
+            displayTasks();
+            updateHomeStats();
+        }
+
+        function displayTasks() {
+            const container = document.getElementById('tasks-display');
+            if (tasks.length === 0) {
+                container.innerHTML = '<p style="color: #999; text-align: center; padding: 20px;">Henüz görev eklemedin. Yukarıdan yeni görev ekle!</p>';
+                return;
+            }
+
+            const days = ['Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi', 'Pazar'];
+            let html = '';
+            days.forEach(day => {
+                const dayTasks = tasks.filter(t => t.day === day);
+                if (dayTasks.length > 0) {
+                    html += `<h4 style="color: #4D96FF; margin: 20px 0 10px 0;">📅 ${day}</h4>`;
+                    dayTasks
+                        .sort((a, b) => a.time.localeCompare(b.time))
+                        .forEach(task => {
+                            html += `
+                                <div class="task-item">
+                                    <div><strong style="color: #FF9A3C;">⏰ ${task.time}</strong> — ${task.name}</div>
+                                    <button class="delete-btn" onclick="deleteTask(${task.id})">🗑️ Sil</button>
+                                </div>`;
+                        });
+                }
+            });
+
+            container.innerHTML = html;
+        }
+
+        // =====================================================================
+        // MİNİ TESTLER
+        // =====================================================================
+        function selectQuizCategory(category, btn) {
+            currentQuizCategory = category;
+            quizAnswers = {};
+            document.querySelectorAll('#quiz .difficulty-btn').forEach(b => b.classList.remove('selected'));
+            if (btn) btn.classList.add('selected');
+            loadQuiz();
+        }
+
+        function loadQuiz() {
+            const questions = quizQuestions[currentQuizCategory];
+            const container = document.getElementById('quiz-container');
+            let html = '';
+
+            questions.forEach((q, index) => {
+                html += `
+                    <div class="quiz-question">
+                        <div style="font-weight: bold; font-size: 20px; margin-bottom: 15px;">${index + 1}. ${q.question}</div>
+                        <div class="quiz-options">
+                            ${q.options.map((option, optIndex) => `
+                                <button class="quiz-option" onclick="selectQuizAnswer(${index}, ${optIndex})" id="quiz-${index}-${optIndex}">
+                                    ${option}
+                                </button>`).join('')}
+                        </div>
+                    </div>`;
+            });
+
+            container.innerHTML = html;
+            document.getElementById('submit-quiz-btn').style.display = 'block';
+            document.getElementById('quiz-result').innerHTML = '';
+            renderBestScores();
+        }
+
+        function renderBestScores() {
+            const labels = { turkce: '📚 Türkçe', matematik: '🔢 Matematik', genelkultur: '🌍 Genel Kültür' };
+            const entries = Object.entries(bestScores);
+            if (entries.length === 0) {
+                document.getElementById('best-scores').innerHTML = '';
+                return;
+            }
+            let html = '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;">';
+            entries.forEach(([cat, score]) => {
+                html += `<div style="background:linear-gradient(135deg,#FFD93D,#FF9A3C);color:white;padding:8px 16px;border-radius:20px;font-weight:bold;">
+                    ${labels[cat] || cat}: En iyi ${score}/10 🏆
+                </div>`;
+            });
+            html += '</div>';
+            document.getElementById('best-scores').innerHTML = html;
+        }
+
+        function selectQuizAnswer(questionIndex, optionIndex) {
+            const question = quizQuestions[currentQuizCategory][questionIndex];
+            for (let i = 0; i < question.options.length; i++) {
+                const btn = document.getElementById(`quiz-${questionIndex}-${i}`);
+                if (btn) { btn.style.background = 'white'; btn.style.borderColor = '#ddd'; }
+            }
+            const selectedBtn = document.getElementById(`quiz-${questionIndex}-${optionIndex}`);
+            if (selectedBtn) { selectedBtn.style.background = '#FFD93D'; selectedBtn.style.borderColor = '#FF9A3C'; }
+            quizAnswers[questionIndex] = optionIndex;
+        }
+
+        async function submitQuiz() {
+            const questions = quizQuestions[currentQuizCategory];
+            let correct = 0;
+
+            questions.forEach((q, index) => {
+                const userAnswer = quizAnswers[index];
+                if (userAnswer !== undefined) {
+                    for (let i = 0; i < q.options.length; i++) {
+                        const btn = document.getElementById(`quiz-${index}-${i}`);
+                        if (btn) {
+                            btn.disabled = true;
+                            if (i === q.correct) btn.classList.add('correct');
+                            else if (i === userAnswer && userAnswer !== q.correct) btn.classList.add('wrong');
+                        }
+                    }
+                    if (userAnswer === q.correct) correct++;
+                }
+            });
+
+            const total = questions.length;
+
+            // Save best score
+            if (!bestScores[currentQuizCategory] || correct > bestScores[currentQuizCategory]) {
+                bestScores[currentQuizCategory] = correct;
+                await storageSet('quiz-best-scores', bestScores);
+                updateHomeStats();
+            }
+
+            const percentage = (correct / total) * 100;
+            let message = '', emoji = '';
+            if (percentage === 100) { message = 'Mükemmelsin! Dino seninle gurur duyuyor! Her soruyu doğru bildin!'; emoji = '🎉🏆'; }
+            else if (percentage >= 80) { message = 'Harikasın! Çok iyi bir performans sergiledi! Dino çok mutlu!'; emoji = '🌟👏'; }
+            else if (percentage >= 60) { message = 'İyi iş çıkardın! Biraz daha pratik yaparak daha da iyileşebilirsin!'; emoji = '👍😊'; }
+            else { message = 'Başlangıç için iyi! Konuları tekrar gözden geçir ve yeniden dene!'; emoji = '💪🦖'; }
+
+            const isNewBest = bestScores[currentQuizCategory] === correct;
+
+            document.getElementById('quiz-result').innerHTML = `
+                <div class="result-box">
+                    <div style="font-size: 64px; margin-bottom: 15px;">${emoji}</div>
+                    <h3>Sonucun: ${correct} / ${total}</h3>
+                    ${isNewBest ? '<div style="font-size:22px;margin:8px 0;">🏆 Yeni en iyi skor!</div>' : ''}
+                    <p style="font-size: 20px; margin-top: 15px;">${message}</p>
+                    <button class="btn" onclick="loadQuiz()" style="margin-top: 20px;">🔄 Testi Yeniden Başlat</button>
+                </div>`;
+
+            document.getElementById('submit-quiz-btn').style.display = 'none';
+            renderBestScores();
+        }
+    </script>
+</body>
+</html>
